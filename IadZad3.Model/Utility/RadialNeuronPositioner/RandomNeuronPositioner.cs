@@ -4,14 +4,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using IadZad3.Model.Utility.MathUtility;
+using IadZad3.Model.Utility.TrainingParameter;
 using MathNet.Numerics.LinearAlgebra;
 
 namespace IadZad3.Model.Utility
 {
-    class RandomNeuronPositioner : INeuronPositioner
+    public class RandomNeuronPositioner : INeuronPositioner
     {
-        public void PositionNeurons(List<Vector<double>> inputPoints, List<RadialNeuron> radialNeurons)
+        public void PositionNeurons(TrainingParameters trainingParameters, List<RadialNeuron> radialNeurons)
         {
+            trainingParameters.Validate();
+
+            var inputPoints = trainingParameters.InputPoints;
+
             List<int> randomPositions = new List<int>(radialNeurons.Count);
             for (int i = 0; i < randomPositions.Count; i++)
             {
@@ -27,10 +32,11 @@ namespace IadZad3.Model.Utility
             int radialIndex = 0;
             foreach (var index in randomPositions)
             {
-                for (int i = 0; i < inputPoints.First().Count; i++)
+                for (int i = 0; i < inputPoints[0].Input.Count; i++)
                 {
-                    radialNeurons[radialIndex++].Position[i] = inputPoints[index][i];
+                    radialNeurons[radialIndex].Position[i] = inputPoints[index].Input[i];
                 }
+                radialIndex++;
             }
         }
     }

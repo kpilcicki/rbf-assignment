@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2036
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IadZad3", "IadZad3\IadZad3.csproj", "{1E423E0C-DB77-48EB-BEA0-215F44E63AFC}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IadZad3.Model", "IadZad3.Model\IadZad3.Model.csproj", "{397E06C5-AE21-47C0-A899-58AC1EAA4DB0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IadZad3.Tests", "IadZad3.Tests\IadZad3.Tests.csproj", "{151BD3DB-FA03-4BDC-B0E5-01FDC80546B9}"
@@ -15,10 +13,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{1E423E0C-DB77-48EB-BEA0-215F44E63AFC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1E423E0C-DB77-48EB-BEA0-215F44E63AFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1E423E0C-DB77-48EB-BEA0-215F44E63AFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1E423E0C-DB77-48EB-BEA0-215F44E63AFC}.Release|Any CPU.Build.0 = Release|Any CPU
 		{397E06C5-AE21-47C0-A899-58AC1EAA4DB0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{397E06C5-AE21-47C0-A899-58AC1EAA4DB0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{397E06C5-AE21-47C0-A899-58AC1EAA4DB0}.Release|Any CPU.ActiveCfg = Release|Any CPU

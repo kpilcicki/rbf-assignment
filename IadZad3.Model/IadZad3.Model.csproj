@@ -45,26 +45,28 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Model\TrainingSet.cs" />
     <Compile Include="Utility\ActivationFunctions\GaussianRadialBasis.cs" />
     <Compile Include="Utility\ActivationFunctions\IGaussianFunction.cs" />
-    <Compile Include="Utility\INeuronPositioner.cs" />
+    <Compile Include="Utility\DataUtility\DataGetter.cs" />
+    <Compile Include="Utility\RadialNeuronPositioner\INeuronPositioner.cs" />
     <Compile Include="Utility\DistanceCalculator\EuclideanDistance.cs" />
     <Compile Include="Utility\DistanceCalculator\IDistanceCalculator.cs" />
-    <Compile Include="LinearNeuron.cs" />
+    <Compile Include="Model\LinearNeuron.cs" />
     <Compile Include="Utility\DistanceCalculator\ManhattanDistance.cs" />
-    <Compile Include="RadialNeuron.cs" />
+    <Compile Include="Model\RadialNeuron.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RBFNetwork.cs" />
+    <Compile Include="Model\RBFNetwork.cs" />
     <Compile Include="Utility\MathUtility\RandomNumberProvider.cs" />
-    <Compile Include="Utility\RandomNeuronPositioner.cs" />
+    <Compile Include="Utility\RadialNeuronPositioner\RandomNeuronPositioner.cs" />
+    <Compile Include="Utility\TrainingParameter\BackpropagationTrainingParameters.cs" />
+    <Compile Include="Utility\TrainingParameter\TrainingParameters.cs" />
     <Compile Include="Utility\WidthCalculator\IWidthCalculator.cs" />
     <Compile Include="Utility\WidthCalculator\KNNWidthCalculator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Utility\DataGetter\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
