@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IadZad3.Tests", "IadZad3.Te
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IadZad3.View", "IadZad3.View\IadZad3.View.csproj", "{7EB8FC4C-E133-43E7-9390-8C15D21D32DF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IAD_zad2", "..\SelfOrganizingMaps\IAD_zad2\IAD_zad2.csproj", "{28F41F12-6CDD-45F3-893D-61C570A81753}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{7EB8FC4C-E133-43E7-9390-8C15D21D32DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7EB8FC4C-E133-43E7-9390-8C15D21D32DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7EB8FC4C-E133-43E7-9390-8C15D21D32DF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{28F41F12-6CDD-45F3-893D-61C570A81753}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28F41F12-6CDD-45F3-893D-61C570A81753}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28F41F12-6CDD-45F3-893D-61C570A81753}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28F41F12-6CDD-45F3-893D-61C570A81753}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

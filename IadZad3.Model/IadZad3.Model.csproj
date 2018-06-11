@@ -58,6 +58,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Model\RBFNetwork.cs" />
     <Compile Include="Utility\MathUtility\RandomNumberProvider.cs" />
+    <Compile Include="Utility\RadialNeuronPositioner\KMeansNeuronPositioner.cs" />
     <Compile Include="Utility\RadialNeuronPositioner\RandomNeuronPositioner.cs" />
     <Compile Include="Utility\TrainingParameter\BackpropagationTrainingParameters.cs" />
     <Compile Include="Utility\TrainingParameter\TrainingParameters.cs" />
@@ -67,6 +68,11 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\..\SelfOrganizingMaps\IAD_zad2\IAD_zad2.csproj">
+      <Project>{28f41f12-6cdd-45f3-893d-61c570a81753}</Project>
+      <Name>IAD_zad2</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
