@@ -55,7 +55,7 @@ namespace IadZad3.Model
         public List<double> MeanSquaredErrors { get; set; }
 
 
-        private void initLayers(TrainingParameters parameters)
+        private void initLayers(BackpropagationTrainingParameters parameters)
         {
             _neuronPositioner.PositionNeurons(parameters, RadialLayer);
             _widthCalculator.CalculateWidths(RadialLayer);

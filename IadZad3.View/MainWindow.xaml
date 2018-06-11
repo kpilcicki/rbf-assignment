@@ -37,6 +37,13 @@
             <ComboBoxItem Content="Classification"/>
         </ComboBox>
         <Button x:Name="TrainButton" Content="Train" HorizontalAlignment="Left" Margin="181,327,0,0" VerticalAlignment="Top" Width="75" Click="TrainButton_Click"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="287,385,0,0" TextWrapping="Wrap" Text="5" VerticalAlignment="Top" Width="120"/>
+        <Label Content="KMeans epochs" HorizontalAlignment="Left" Margin="287,355,0,0" VerticalAlignment="Top"/>
+        <CheckBox x:Name="Input1Check" Content="1" HorizontalAlignment="Left" Margin="418,320,0,0" VerticalAlignment="Top" IsChecked="True"/>
+        <CheckBox x:Name="Input2Check" Content="2" HorizontalAlignment="Left" Margin="418,343,0,0" VerticalAlignment="Top" IsChecked="True"/>
+        <CheckBox x:Name="Input3Check" Content="3" HorizontalAlignment="Left" Margin="418,368,0,0" VerticalAlignment="Top" IsChecked="True"/>
+        <CheckBox x:Name="Input4Check" Content="4" HorizontalAlignment="Left" Margin="418,393,0,0" VerticalAlignment="Top" IsChecked="True"/>
+        <Label Content="Chosen inputs" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="359,289,0,0"/>
 
     </Grid>
 </Window>

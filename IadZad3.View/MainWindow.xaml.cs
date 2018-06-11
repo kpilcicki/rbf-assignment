@@ -4,6 +4,7 @@ using IadZad3.Model.Utility;
 using IadZad3.Model.Utility.ActivationFunctions;
 using IadZad3.Model.Utility.DataUtility;
 using IadZad3.Model.Utility.DistanceCalculator;
+using IadZad3.Model.Utility.RadialNeuronPositioner;
 using IadZad3.Model.Utility.TrainingParameter;
 using IadZad3.Model.Utility.WidthCalculator;
 using MathNet.Numerics.LinearAlgebra;
@@ -43,6 +44,8 @@ namespace IadZad3.View
         private int KNeighbors;
         private double scalingCoefficient;
 
+        private INeuronPositioner chosenPositioner = new RandomNeuronPositioner();
+
         public RBFNetwork Network { get; set; }
 
         public string TestingSetPath { get; set; }
@@ -62,6 +65,7 @@ namespace IadZad3.View
             inputCount = Int32.Parse(InputVectorCount.Text);
             KNeighbors = Int32.Parse(KNeighborsCount.Text);
             scalingCoefficient = Double.Parse(ScalingCoefficientInput.Text, CultureInfo.InvariantCulture);
+            
 
 
             Network = new RBFNetwork(new EuclideanDistance(),
@@ -81,11 +85,13 @@ namespace IadZad3.View
                     taskSelected = TaskSelection.APPROX;
                     TrainingSetPath.Text = "approximation1.txt";
                     TestingSetPath = "approximation_test.txt";
+                    chosenPositioner = new RandomNeuronPositioner();
                     break;
                 case "Classification":
                     taskSelected = TaskSelection.CLASS;
                     TrainingSetPath.Text = "classification.txt";
                     TestingSetPath = "classification_test.txt";
+                    chosenPositioner = new KMeansNeuronPositioner();
                     break;
             }
         }
@@ -100,6 +106,15 @@ namespace IadZad3.View
             var minWeight = Double.Parse(MinInitialWeight.Text, CultureInfo.InvariantCulture);
             var maxWeight = Double.Parse(MaxInitialWeight.Text, CultureInfo.InvariantCulture);
             var trainingPath = TrainingSetPath.Text;
+            var kMeansEpochs = Int32.Parse(EpochsCount.Text);
+            bool[] chosenInputs = new bool[] {
+                Input1Check.IsChecked.Value,
+                Input2Check.IsChecked.Value,
+                Input3Check.IsChecked.Value,
+                Input4Check.IsChecked.Value
+            };
+
+            BackpropagationTrainingParameters parameters;
 
             DataGetter dg = new DataGetter();
             var trainingData = new List<TrainingSet>();
@@ -107,24 +122,36 @@ namespace IadZad3.View
             {
                 case TaskSelection.APPROX:
                     trainingData = dg.GetTrainingDataWithOneOutput(trainingPath, inputCount);
+                    parameters = new BackpropagationTrainingParameters(learningRate, epochs, momentum, minWeight, maxWeight, trainingData);
+                    Network.Train(parameters);
+                    ApproximationExample(trainingData);
                     break;
+                case TaskSelection.CLASS:
+                    trainingData = dg.GetTrainingDataWithChosenInputs(trainingPath, chosenInputs);
+                    parameters = new KMeansBackpropagationTrainingParameters(learningRate, epochs, momentum, minWeight, maxWeight, trainingData, kMeansEpochs);
+                    Network.Train(parameters);
+                    break;
+                default:
+                    throw new InvalidOperationException("use of nonexistent enum element");
             }
-            BackpropagationTrainingParameters parameters = new BackpropagationTrainingParameters(learningRate, epochs, momentum, minWeight, maxWeight,trainingData);
 
-            Network.Train(parameters);
 
             
 
+            
+        }
 
+        private void ApproximationExample(List<TrainingSet> trainingData)
+        {
             List<DataPoint> graphTrainingPoints = new List<DataPoint>();
             List<DataPoint> graphTestingPoints = new List<DataPoint>();
-            foreach(var set in trainingData.OrderBy(elem => elem.Input.At(0)))
+            foreach (var set in trainingData.OrderBy(elem => elem.Input.At(0)))
             {
                 var input = set.Input.At(0);
                 graphTrainingPoints.Add(new DataPoint(input, set.DesiredOutput.At(0)));
                 graphTestingPoints.Add(new DataPoint(input, Network.ProcessInput(set.Input).At(0)));
             }
-            
+
 
             List<Series> functionSerieses = new List<Series>();
 
@@ -134,10 +161,11 @@ namespace IadZad3.View
                 Title = "Training set"
             });
 
-            functionSerieses.Add(new LineSeries(){
+            functionSerieses.Add(new LineSeries()
+            {
                 ItemsSource = graphTestingPoints,
                 Title = "Approximation"
-            });            
+            });
 
             GraphWindow gw = new GraphWindow("Function graph", "x", "y", functionSerieses);
             gw.Show();
@@ -145,15 +173,16 @@ namespace IadZad3.View
 
             List<DataPoint> meanSquaredErrors = new List<DataPoint>();
             int epoch = 0;
-            foreach(double MSE in Network.MeanSquaredErrors)
+            foreach (double MSE in Network.MeanSquaredErrors)
             {
                 meanSquaredErrors.Add(new DataPoint(++epoch, MSE));
             }
 
             List<Series> errorSerieses = new List<Series>();
-            errorSerieses.Add(new LineSeries() {
-                    Title = "Mean squared eror",
-                    ItemsSource = meanSquaredErrors
+            errorSerieses.Add(new LineSeries()
+            {
+                Title = "Mean squared eror",
+                ItemsSource = meanSquaredErrors
             });
 
             GraphWindow errorGraphWindow = new GraphWindow("Mean squared error by epoch", "epoch", "MSE", errorSerieses);

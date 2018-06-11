@@ -10,6 +10,6 @@ namespace IadZad3.Model.Utility
 {
     public interface INeuronPositioner
     {
-        void PositionNeurons(TrainingParameters trainingParameters, List<RadialNeuron> radialNeurons);
+        void PositionNeurons(BackpropagationTrainingParameters trainingParameters, List<RadialNeuron> radialNeurons);
     }
 }
