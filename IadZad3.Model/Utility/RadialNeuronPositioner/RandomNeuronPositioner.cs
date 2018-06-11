@@ -17,8 +17,8 @@ namespace IadZad3.Model.Utility
 
             var inputPoints = trainingParameters.InputPoints;
 
-            List<int> randomPositions = new List<int>(radialNeurons.Count);
-            for (int i = 0; i < randomPositions.Count; i++)
+            List<int> randomPositions = new List<int>();
+            for (int i = 0; i < radialNeurons.Count; i++)
             {
                 int randomPosition;
                 do

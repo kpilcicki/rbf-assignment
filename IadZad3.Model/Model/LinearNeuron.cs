@@ -11,9 +11,14 @@ namespace IadZad3.Model
     public class LinearNeuron
     {
         public Vector<double> Weights { get; set; }
-        public double BiasWeight { get; set; }
 
-        public void InitNeuron(int radialNeuronCount, int minWeight, int maxWeight)
+        public Vector<double> WeightsDeltas { get; set; }
+
+        public double BiasWeight { get; set; }
+        public double BiasWeightDelta { get; set; }
+
+
+        public void InitNeuron(int radialNeuronCount, double minWeight, double maxWeight)
         {
             
             var weights = new double[radialNeuronCount];
@@ -23,7 +28,10 @@ namespace IadZad3.Model
             }
            
             Weights = Vector<double>.Build.DenseOfArray(weights);
+            WeightsDeltas = Vector<double>.Build.DenseOfArray(new double[radialNeuronCount]);
             BiasWeight = RandomNumberProvider.GetRandomNumber(minWeight, maxWeight);
+            BiasWeightDelta = 0;
+
         }
     }
 }

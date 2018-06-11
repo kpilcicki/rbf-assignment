@@ -1,0 +1,42 @@
+﻿<Window x:Class="IadZad3.View.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:IadZad3.View"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid x:Name="MainGrid">
+        <Rectangle HorizontalAlignment="Left" Height="211" Stroke="Black" VerticalAlignment="Top" Width="279"/>
+        <Label Content="Radial neuron count" HorizontalAlignment="Left" Margin="10,28,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.039,0.386"/>
+        <TextBox x:Name="RadialNeuronCount" HorizontalAlignment="Left" Height="23" Margin="10,54,0,0" TextWrapping="Wrap" Text="20" VerticalAlignment="Top" Width="120" />
+        <Label Content="Linear neuron count" HorizontalAlignment="Left" Margin="148,28,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.039,0.386"/>
+        <TextBox x:Name="LinearNeuronCount" HorizontalAlignment="Left" Height="23" Margin="148,54,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="120" />
+        <Label Content="Input vector length" HorizontalAlignment="Left" Margin="10,90,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.039,0.386"/>
+        <TextBox x:Name="InputVectorCount" HorizontalAlignment="Left" Height="23" Margin="10,116,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="120" />
+        <Label Content="KN Neighbors" HorizontalAlignment="Left" Margin="148,99,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.039,0.386"/>
+        <TextBox x:Name="KNeighborsCount" HorizontalAlignment="Left" Height="23" Margin="148,125,0,0" TextWrapping="Wrap" Text="4" VerticalAlignment="Top" Width="120" />
+        <Label Content="Scaling coefficient" HorizontalAlignment="Left" Margin="10,149,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.039,0.386" Width="120"/>
+        <TextBox x:Name="ScalingCoefficientInput" HorizontalAlignment="Left" Height="23" Margin="10,175,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="120" />
+        <Button x:Name="CreateNetworl" Content="Create network" HorizontalAlignment="Left" Margin="148,175,0,0" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.524,0.511" Height="23" Click="CreateNetworl_Click"/>
+        <Label Content="Network creation&#xD;&#xA;" HorizontalAlignment="Left" Margin="87,7,0,0" VerticalAlignment="Top"/>
+        <Label Content="Epochs" HorizontalAlignment="Left" Margin="10,228,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="EpochsCount" HorizontalAlignment="Left" Height="23" Margin="10,259,0,0" TextWrapping="Wrap" Text="100" VerticalAlignment="Top" Width="48" />
+        <Label Content="Learning rate" HorizontalAlignment="Left" Margin="87,228,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="LearningRateInput" HorizontalAlignment="Left" Height="23" Margin="87,259,0,0" TextWrapping="Wrap" Text="0.1" VerticalAlignment="Top" Width="80" />
+        <Label Content="Momentum" HorizontalAlignment="Left" Margin="184,228,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="MomentumInput" HorizontalAlignment="Left" Height="23" Margin="184,259,0,0" TextWrapping="Wrap" Text="0.1" VerticalAlignment="Top" Width="72"/>
+        <Label Content="Min weight&#xD;&#xA;" HorizontalAlignment="Left" Margin="10,293,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="MinInitialWeight" HorizontalAlignment="Left" Height="23" Margin="10,324,0,0" TextWrapping="Wrap" Text="-1" VerticalAlignment="Top" Width="61"/>
+        <Label Content="Max weight" HorizontalAlignment="Left" Margin="87,293,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="MaxInitialWeight" HorizontalAlignment="Left" Height="23" Margin="87,324,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="61" />
+        <Label Content="Training data path" HorizontalAlignment="Left" Margin="10,355,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="TrainingSetPath" HorizontalAlignment="Left" Height="23" Margin="10,386,0,0" TextWrapping="Wrap" Text="approximation1.txt" VerticalAlignment="Top" Width="120" />
+        <ComboBox x:Name="TaskCombo" HorizontalAlignment="Left" Margin="148,386,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="ComboBox_SelectionChanged">
+            <ComboBoxItem Content="Approximation" IsSelected="True"/>
+            <ComboBoxItem Content="Classification"/>
+        </ComboBox>
+        <Button x:Name="TrainButton" Content="Train" HorizontalAlignment="Left" Margin="181,327,0,0" VerticalAlignment="Top" Width="75" Click="TrainButton_Click"/>
+
+    </Grid>
+</Window>

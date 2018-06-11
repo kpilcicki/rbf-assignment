@@ -21,7 +21,7 @@ namespace IadZad3.Model
         private readonly INeuronPositioner _neuronPositioner;
 
 
-        public RBFNetwork(IDistanceCalculator distance, IGaussianFunction gaussian, IWidthCalculator widthCalculator, INeuronPositioner positioner, int radialNeuronCount, int linearNeuronCount)
+        public RBFNetwork(IDistanceCalculator distance, IGaussianFunction gaussian, IWidthCalculator widthCalculator, INeuronPositioner positioner, int radialNeuronCount, int linearNeuronCount, int inputDimensions)
         {
             _distance = distance;
             _gaussian = gaussian;
@@ -29,10 +29,19 @@ namespace IadZad3.Model
             _neuronPositioner = positioner;
             //RadialNeuronCount = radialNeuronCount;
             RadialLayer = new List<RadialNeuron>();
-            RadialLayer.AddRange(new RadialNeuron[radialNeuronCount]);
+            //RadialLayer.AddRange(new RadialNeuron[radialNeuronCount]);
+            for (int i = 0; i < radialNeuronCount; i++)
+            {
+                RadialLayer.Add(new RadialNeuron(inputDimensions));
+            }
             //LinearNeuronCount = linearNeuronCount;
             LinearLayer = new List<LinearNeuron>();
-            LinearLayer.AddRange(new LinearNeuron[linearNeuronCount]);
+            for (int i = 0; i < linearNeuronCount; i++)
+            {
+                LinearLayer.Add(new LinearNeuron());
+            }
+            MeanSquaredErrors = new List<double>();
+            //LinearLayer.AddRange(new LinearNeuron[linearNeuronCount]);
         }
 
 
@@ -41,13 +50,15 @@ namespace IadZad3.Model
 
         public List<RadialNeuron> RadialLayer { get; set; }
         public List<LinearNeuron> LinearLayer { get; set; }
-        public double ScalingCoefficient { get; set; }
-        public int KNNeighbors { get; set; }
+        //public double ScalingCoefficient { get; set; }
+        //public int KNNeighbors { get; set; }
+        public List<double> MeanSquaredErrors { get; set; }
 
 
         private void initLayers(TrainingParameters parameters)
         {
             _neuronPositioner.PositionNeurons(parameters, RadialLayer);
+            _widthCalculator.CalculateWidths(RadialLayer);
 
             foreach (var linear in LinearLayer)
             {
@@ -55,9 +66,51 @@ namespace IadZad3.Model
             }
         }
 
-        public void Train(double scalingCoefficient, int KNNeighbors, TrainingParameters parameters)
+        public void Train(BackpropagationTrainingParameters parameters)
         {
+            MeanSquaredErrors.Clear();
             initLayers(parameters);
+
+            var epochs = parameters.Epochs;
+            var learningRate = parameters.LearningRate;
+            var maxWeightValue = parameters.MaxWeightValue;
+            var minWeightValue = parameters.MinWeightValue;
+            var momentum = parameters.Momentum;
+
+            for (int i = 0; i < epochs; i++)
+            {
+                for(int j = 0; j < RadialLayer.Count; j++)
+                { 
+                    RadialLayer[j].Outputs.Clear();
+                }
+                double meanSquaredErrorAggregate = 0; // sum of all error squares of one epoch
+                foreach ( var point in parameters.InputPoints)
+                {
+                    var networkOutput = ProcessInput(point.Input);
+                    var deltas = (networkOutput - point.DesiredOutput);//(*1) differential of linear neuron function is 1
+
+                    meanSquaredErrorAggregate += deltas.Sum(delta => delta * delta);// sqrt(SUM[Dij^2]) add to the aggregate
+                    
+
+                    for (int j = 0; j < LinearLayer.Count; j++)
+                    {
+                        //update weights based on radial neurons' outputs
+                        for (int k = 0; k < RadialLayer.Count; k++)
+                        {
+                            var instantDelta = (deltas[j] * RadialLayer[k].Outputs.Last()) * learningRate;// LR * deltaM * xN                            
+
+                            LinearLayer[j].WeightsDeltas[k] = -(instantDelta + (LinearLayer[j].WeightsDeltas[k] * momentum));// add momentum
+                            LinearLayer[j].Weights[k] = LinearLayer[j].Weights[k] + LinearLayer[j].WeightsDeltas[k]; //update weights(-LR*POCHODNABLEDU)
+                        }
+                        //Bias update
+                        LinearLayer[j].BiasWeightDelta = -((deltas[j] * learningRate) + (LinearLayer[j].BiasWeightDelta * momentum));
+                        LinearLayer[j].BiasWeight = LinearLayer[j].BiasWeight + LinearLayer[j].BiasWeightDelta;
+                    }
+
+                }
+                MeanSquaredErrors.Add(Math.Sqrt(meanSquaredErrorAggregate));// sqrt of the sum of all errors
+            }
+
 
         }
 
@@ -72,9 +125,10 @@ namespace IadZad3.Model
             for (int i = 0; i < RadialLayer.Count; i++)
             {
                 var diff = _distance.CalculateDistance(input, RadialLayer[i].Position);
-                var width = RadialLayer[i].Width * ScalingCoefficient;
+                var width = RadialLayer[i].Width;// * ScalingCoefficient;
                 tmpValues[i] = _gaussian.Calculate(diff, width);
 
+                RadialLayer[i].Outputs.Add(tmpValues[i]); // radial output saving test
             }
 
             Vector<double> outputValues = Vector<double>.Build.DenseOfArray(new double[LinearLayer.Count]);

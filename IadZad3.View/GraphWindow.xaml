@@ -1,0 +1,19 @@
+﻿<Window x:Class="IadZad3.View.GraphWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:oxy="http://oxyplot.org/wpf"
+        xmlns:local="clr-namespace:IadZad3.View"
+        mc:Ignorable="d"
+        Title="GraphWindow" Height="600" Width="1100">
+    <Grid>
+        <oxy:Plot Name="Plot" Title="{Binding GraphName}">
+            <oxy:Plot.Axes>
+                <oxy:LinearAxis Title="{Binding NameY}" Position="Left" FontSize="15" FontWeight="ExtraBold"></oxy:LinearAxis>
+                <oxy:LinearAxis Title="{Binding NameX}" Position="Bottom" FontSize="15" FontWeight="ExtraBold"></oxy:LinearAxis>
+
+            </oxy:Plot.Axes>
+        </oxy:Plot>
+    </Grid>
+</Window>

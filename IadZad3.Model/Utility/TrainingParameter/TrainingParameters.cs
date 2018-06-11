@@ -12,8 +12,15 @@ namespace IadZad3.Model.Utility.TrainingParameter
     {
         public List<TrainingSet> InputPoints = new List<TrainingSet>();
 
-        public int MinWeightValue { get; set; }
-        public int MaxWeightValue { get; set; }
+        public double MinWeightValue { get; set; }
+        public double MaxWeightValue { get; set; }
+
+        public TrainingParameters(List<TrainingSet> inputPoints, double minWeightValue, double maxWeightValue)
+        {
+            InputPoints = inputPoints;
+            MinWeightValue = minWeightValue;
+            MaxWeightValue = maxWeightValue;
+        }
 
         public void Validate()
         {

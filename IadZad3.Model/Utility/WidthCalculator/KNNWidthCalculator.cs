@@ -27,13 +27,16 @@ namespace IadZad3.Model.Utility.WidthCalculator
                 List<Tuple<RadialNeuron, double>> centersWithDistances = new List<Tuple<RadialNeuron, double>>();
                 for (int j = 0; j < radialLayer.Count; j++)
                 {
-                    var calculatedDistance = _distance.CalculateDistance(radialLayer[i].Position, radialLayer[j].Position);
-                    centersWithDistances.Add(new Tuple<RadialNeuron, double>(radialLayer[j], calculatedDistance));
+                    if (i != j)
+                    {
+                        var calculatedDistance = _distance.CalculateDistance(radialLayer[i].Position, radialLayer[j].Position);
+                        centersWithDistances.Add(new Tuple<RadialNeuron, double>(radialLayer[j], calculatedDistance));
+                    }
                 }
 
                 var orderedByDistance = centersWithDistances.OrderBy(tuple => tuple.Item2).Take(KNeighbors);
 
-                var toCount = ScalingCoefficient * (1.0/KNeighbors) *  orderedByDistance.Sum(elem => elem.Item2); // alpha * 1/p * SUM[Dij]
+                var toCount = ScalingCoefficient * Math.Sqrt( (1.0/KNeighbors) *  orderedByDistance.Sum(elem => elem.Item2 * elem.Item2)); // sqrt( alpha * 1/p * SUM[(Dij)^2] )
 
                 radialLayer[i].Width = toCount; // should set wanted values
             }
