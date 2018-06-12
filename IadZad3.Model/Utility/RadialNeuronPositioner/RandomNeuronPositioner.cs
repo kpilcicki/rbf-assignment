@@ -11,7 +11,7 @@ namespace IadZad3.Model.Utility
 {
     public class RandomNeuronPositioner : INeuronPositioner
     {
-        public void PositionNeurons(TrainingParameters trainingParameters, List<RadialNeuron> radialNeurons)
+        public void PositionNeurons(BackpropagationTrainingParameters trainingParameters, List<RadialNeuron> radialNeurons)
         {
             trainingParameters.Validate();
 

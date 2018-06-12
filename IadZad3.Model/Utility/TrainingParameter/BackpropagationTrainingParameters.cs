@@ -21,7 +21,7 @@ namespace IadZad3.Model.Utility.TrainingParameter
             Momentum = momentum;
         }
 
-        public void Validate()
+        new public void Validate()
         {
             base.Validate();
         }

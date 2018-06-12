@@ -61,6 +61,7 @@
     <Compile Include="Utility\RadialNeuronPositioner\KMeansNeuronPositioner.cs" />
     <Compile Include="Utility\RadialNeuronPositioner\RandomNeuronPositioner.cs" />
     <Compile Include="Utility\TrainingParameter\BackpropagationTrainingParameters.cs" />
+    <Compile Include="Utility\TrainingParameter\KMeansBackpropagationTrainingParameters.cs" />
     <Compile Include="Utility\TrainingParameter\TrainingParameters.cs" />
     <Compile Include="Utility\WidthCalculator\IWidthCalculator.cs" />
     <Compile Include="Utility\WidthCalculator\KNNWidthCalculator.cs" />

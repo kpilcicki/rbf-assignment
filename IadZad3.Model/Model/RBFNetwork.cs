@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using IadZad3.Model.Model;
 using IadZad3.Model.Utility;
 using IadZad3.Model.Utility.ActivationFunctions;
 using IadZad3.Model.Utility.DistanceCalculator;
@@ -27,32 +28,29 @@ namespace IadZad3.Model
             _gaussian = gaussian;
             _widthCalculator = widthCalculator;
             _neuronPositioner = positioner;
-            //RadialNeuronCount = radialNeuronCount;
-            RadialLayer = new List<RadialNeuron>();
-            //RadialLayer.AddRange(new RadialNeuron[radialNeuronCount]);
+        
+            RadialLayer = new List<RadialNeuron>();        
             for (int i = 0; i < radialNeuronCount; i++)
             {
                 RadialLayer.Add(new RadialNeuron(inputDimensions));
             }
-            //LinearNeuronCount = linearNeuronCount;
+        
             LinearLayer = new List<LinearNeuron>();
             for (int i = 0; i < linearNeuronCount; i++)
             {
                 LinearLayer.Add(new LinearNeuron());
             }
             MeanSquaredErrors = new List<double>();
-            //LinearLayer.AddRange(new LinearNeuron[linearNeuronCount]);
+            TestMeanSquaredErrors = new List<double>();
+        
         }
-
-
-        //public int RadialNeuronCount { get;}
-        //public int LinearNeuronCount { get;}
-
+        
         public List<RadialNeuron> RadialLayer { get; set; }
         public List<LinearNeuron> LinearLayer { get; set; }
         //public double ScalingCoefficient { get; set; }
         //public int KNNeighbors { get; set; }
         public List<double> MeanSquaredErrors { get; set; }
+        public List<double> TestMeanSquaredErrors { get; set; }
 
 
         private void initLayers(BackpropagationTrainingParameters parameters)
@@ -66,9 +64,10 @@ namespace IadZad3.Model
             }
         }
 
-        public void Train(BackpropagationTrainingParameters parameters)
+        public void Train(BackpropagationTrainingParameters parameters, List<TrainingSet> testingPoints)
         {
             MeanSquaredErrors.Clear();
+            TestMeanSquaredErrors.Clear();
             initLayers(parameters);
 
             var epochs = parameters.Epochs;
@@ -84,6 +83,14 @@ namespace IadZad3.Model
                     RadialLayer[j].Outputs.Clear();
                 }
                 double meanSquaredErrorAggregate = 0; // sum of all error squares of one epoch
+                //test error gathering
+                double testMeanSquaredErrorAggregate = 0;
+                foreach(var tpoint in testingPoints)
+                {
+                    testMeanSquaredErrorAggregate += (ProcessInput(tpoint.Input) - classToVector(tpoint.DesiredOutput.At(0))).Sum(error => error * error);
+                }
+                TestMeanSquaredErrors.Add(Math.Sqrt(testMeanSquaredErrorAggregate));
+
                 foreach ( var point in parameters.InputPoints)
                 {
                     var networkOutput = ProcessInput(point.Input);
@@ -150,7 +157,14 @@ namespace IadZad3.Model
 
         }
 
+        private Vector<double> classToVector(double clazz)
+        {
+            double[] values = new double[3];
 
+            values[(int)Math.Ceiling(clazz) - 1] = 1.0;
+
+            return Vector<double>.Build.DenseOfArray(values);
+        }
 
     }
 }
