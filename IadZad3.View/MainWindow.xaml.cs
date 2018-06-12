@@ -134,6 +134,10 @@ namespace IadZad3.View
                 case TaskSelection.CLASS:
                     trainingData = dg.GetTrainingDataWithChosenInputs(trainingPath, chosenInputs);
                     testingData = dg.GetTrainingDataWithChosenInputs(TestingSetPath, chosenInputs);
+                    testingData = testingData.Select(set => {
+                        set.DesiredOutput = classToVector(set.DesiredOutput.At(0));
+                        return set;
+                    }).ToList();
                     trainingData = trainingData.Select(set => {
                         set.DesiredOutput = classToVector(set.DesiredOutput.At(0));
                         return set;
@@ -232,15 +236,15 @@ namespace IadZad3.View
             //});
             functionSerieses.Add(new LineSeries()
             {
-                ItemsSource = realGraphTestingPoints,
-                Title = "Test set approximation"
-            });
-            functionSerieses.Add(new ScatterSeries()
-            {
                 ItemsSource = realGraphTrainingPoints,
                 Title = "Test set points"
             });
-            
+            functionSerieses.Add(new LineSeries()
+            {
+                ItemsSource = realGraphTestingPoints,
+                Title = "Test set approximation"
+            });
+
 
             //GraphWindow realGw = new GraphWindow("Test function graph", "x", "y", realFunctionSerieses);
             GraphWindow gw = new GraphWindow("Function graph", "x", "y", functionSerieses);

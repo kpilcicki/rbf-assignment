@@ -6,6 +6,7 @@ using IadZad3.Model.Utility.DataUtility;
 using IadZad3.Model.Utility.DistanceCalculator;
 using IadZad3.Model.Utility.TrainingParameter;
 using IadZad3.Model.Utility.WidthCalculator;
+using MathNet.Numerics.LinearAlgebra;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace IadZad3.Tests
@@ -35,7 +36,6 @@ namespace IadZad3.Tests
 
             { Console.WriteLine("test"); }
 
-
             var distCal = new EuclideanDistance();
             RBFNetwork network = new RBFNetwork(distCal,
                                                 new GaussianRadialBasis(),
@@ -43,7 +43,7 @@ namespace IadZad3.Tests
                                                 new RandomNeuronPositioner(),
                                                 2, one[0].DesiredOutput.Count, one[0].Input.Count);
 
-            network.Train(new BackpropagationTrainingParameters(0.5, 20, 0, -1, 1, one));
+            network.Train(new BackpropagationTrainingParameters(0.5, 20, 0, -1, 1, one), test);
 
             var output = network.ProcessInput(test[0].Input);
         }

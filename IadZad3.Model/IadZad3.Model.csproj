@@ -70,7 +70,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\SelfOrganizingMaps\IAD_zad2\IAD_zad2.csproj">
+    <ProjectReference Include="..\IAD_zad2\IAD_zad2.csproj">
       <Project>{28f41f12-6cdd-45f3-893d-61c570a81753}</Project>
       <Name>IAD_zad2</Name>
     </ProjectReference>

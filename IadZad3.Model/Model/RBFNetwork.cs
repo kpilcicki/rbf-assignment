@@ -87,7 +87,7 @@ namespace IadZad3.Model
                 double testMeanSquaredErrorAggregate = 0;
                 foreach(var tpoint in testingPoints)
                 {
-                    testMeanSquaredErrorAggregate += (ProcessInput(tpoint.Input) - classToVector(tpoint.DesiredOutput.At(0))).Sum(error => error * error);
+                    testMeanSquaredErrorAggregate += (ProcessInput(tpoint.Input) - tpoint.DesiredOutput).Sum(error => error * error);
                 }
                 TestMeanSquaredErrors.Add(Math.Sqrt(testMeanSquaredErrorAggregate));
 
